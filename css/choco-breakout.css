@@ -1,0 +1,169 @@
+
+#breakoutCanvas {
+    border: 4px solid #333;
+    background-color: #fff;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    margin-top: 20px;
+    max-width: 100%;
+    height: auto; 
+}
+
+@font-face {
+    font-family: 'Choco';
+    src: url('../fonts/choco.tff') format('truetype'); /* Adjust the path as needed */
+}
+
+/* Apply it to the canvas or a specific class if you like */
+canvas {
+    font-family: 'Choco', Arial, sans-serif;
+}
+
+#game-controls {
+    text-align: center;
+    padding: 20px;
+}
+
+#leftBtn, #rightBtn {
+    padding: 10px 20px;
+    font-size: 18px;
+    margin: 0 10px;
+    background-color: #0095DD;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#leftBtn:active, #rightBtn:active {
+    transform: scale(0.98); /* Slightly shrink buttons when active */
+}
+
+.game-controls {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px; /* Adjust as needed */
+}
+
+.container {
+    text-align: center; /* Add this to center the content */
+}
+
+.message {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.4em;
+    padding: 20px;
+    background-color: #fff;
+    border: 3px solid #0095DD;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    z-index: 10;
+    opacity: 0;
+    transition: opacity 0.5s, transform 0.5s;
+    visibility: hidden;
+    flex-direction: column;
+}
+
+.message-text {
+    margin-bottom: 20px; /* Add space between the text and the button */
+    text-align: center; /* Center the text if it's not already */
+}
+
+.message.hidden {
+    opacity: 0;
+    visibility: hidden;
+    transform: translate(-50%, -40%);
+}
+
+.message.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translate(-50%, -50%);
+}
+
+@keyframes winAnimation {
+    0%, 100% { transform: translate(-50%, -50%) scale(1); }
+    50% { transform: translate(-50%, -50%) scale(1.1); }
+}
+
+#winMessage.show {
+    animation: winAnimation 1s ease infinite;
+}
+
+.message button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    font-size: 1em;
+    color: #fff;
+    background-color: #0095DD;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    align-self: center; 
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+.message button:hover {
+    background-color: #0077AA;
+    transform: scale(1.05);
+}
+
+.message button:active {
+    transform: scale(0.95);
+}
+
+@media (max-width: 768px) {
+    .container {
+        width: auto; /* or 100% */
+        padding: 0 10px; /* Add some padding on the sides */
+        box-sizing: border-box; /* Include padding in width calculation */
+    }
+
+    #breakoutCanvas {
+        /* Adjust canvas size for smaller screens if necessary */
+        width: 100%;
+        height: auto;
+    }
+
+    .message {
+        position: fixed; /* changed from absolute to fixed */
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 1.5em; /* Smaller font size for mobile */
+        padding: 10px; /* Smaller padding for mobile */
+        width: 90%; /* Set a max width for the message box */
+        box-sizing: border-box; /* Include padding and border in width calculation */
+    }
+
+    .message-text {
+        margin-bottom: 10px; /* Less space between the text and the button */
+    }
+
+    .message button {
+        padding: 8px 16px; /* Smaller button padding */
+        font-size: 0.9em; /* Smaller button font size */
+    }
+
+    #game-controls {
+        display: flex; /* Ensure controls are flex */
+        justify-content: center; /* Center buttons horizontally */
+        padding: 10px 0; /* Less vertical padding */
+    }
+
+    #keyboard-instructions {
+        display: none; /* Hide keyboard instructions on mobile */
+    }
+}
+
+/* Ensure the button is on its own line and not too wide */
+.message button {
+    width: auto; /* or you can set a max-width */
+    display: block; /* makes the button a block element */
+    margin: 10px auto; /* centers the button horizontally */
+}
