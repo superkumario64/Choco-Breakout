@@ -1,169 +1,156 @@
-
+/* Canvas */
 #breakoutCanvas {
-    border: 4px solid #333;
-    background-color: #fff;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-    margin-top: 20px;
-    max-width: 100%;
-    height: auto; 
+  border: 4px solid #333;
+  background-color: #fff;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+  margin-top: 20px;
+  max-width: 100%;
+  height: auto;
 }
 
+/* Custom font (fix .ttf extension) */
 @font-face {
-    font-family: 'Choco';
-    src: url('../fonts/choco.tff') format('truetype'); /* Adjust the path as needed */
+  font-family: 'Choco';
+  src: url('../fonts/choco.ttf') format('truetype');
+  font-display: swap;
+}
+canvas { font-family: 'Choco', Arial, sans-serif; }
+
+/* Screen-reader-only utility */
+.sr-only {
+  position: absolute;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0 0 0 0);
+  white-space: nowrap; border: 0;
 }
 
-/* Apply it to the canvas or a specific class if you like */
-canvas {
-    font-family: 'Choco', Arial, sans-serif;
+/* Visible focus rings */
+#breakoutCanvas:focus-visible,
+#leftBtn:focus-visible, #rightBtn:focus-visible,
+.message button:focus-visible {
+  outline: 3px solid #111;
+  outline-offset: 3px;
 }
 
+/* Touch controls */
 #game-controls {
-    text-align: center;
-    padding: 20px;
+  text-align: center;
+  padding: 20px;
 }
-
 #leftBtn, #rightBtn {
-    padding: 10px 20px;
-    font-size: 18px;
-    margin: 0 10px;
-    background-color: #0095DD;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
+  padding: 10px 20px;
+  font-size: 18px;
+  margin: 0 10px;
+  background-color: #0095DD;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
 }
-
 #leftBtn:active, #rightBtn:active {
-    transform: scale(0.98); /* Slightly shrink buttons when active */
+  transform: scale(0.98);
 }
-
 .game-controls {
-    display: flex;
-    justify-content: center;
-    margin-top: 10px; /* Adjust as needed */
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
 }
 
-.container {
-    text-align: center; /* Add this to center the content */
-}
+/* Layout */
+.container { text-align: center; }
 
+/* Dialog / messages */
 .message {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.4em;
-    padding: 20px;
-    background-color: #fff;
-    border: 3px solid #0095DD;
-    border-radius: 10px;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-    z-index: 10;
-    opacity: 0;
-    transition: opacity 0.5s, transform 0.5s;
-    visibility: hidden;
-    flex-direction: column;
+  position: fixed;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  align-items: center; justify-content: center;
+  font-size: 1.4em;
+  padding: 20px;
+  background-color: #fff;
+  border: 3px solid #0095DD;
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+  z-index: 1000;
+  opacity: 0; visibility: hidden;
+  transition: opacity 0.5s, transform 0.5s;
+  flex-direction: column;
 }
-
 .message-text {
-    margin-bottom: 20px; /* Add space between the text and the button */
-    text-align: center; /* Center the text if it's not already */
+  margin-bottom: 20px;
+  text-align: center;
 }
-
 .message.hidden {
-    opacity: 0;
-    visibility: hidden;
-    transform: translate(-50%, -40%);
+  opacity: 0; visibility: hidden;
+  transform: translate(-50%, -40%);
+}
+.message.show {
+  opacity: 1; visibility: visible;
+  transform: translate(-50%, -50%);
 }
 
-.message.show {
-    opacity: 1;
-    visibility: visible;
-    transform: translate(-50%, -50%);
+/* Keep the SHOP button from stretching full width inside UAGB Infobox */
+.uagb-infobox .uagb-ifb-button-wrapper { 
+  display: flex; 
+  justify-content: center; /* keep it centered */
 }
+
+.wp-block-button__link {
+  width: auto !important;       /* stop full-width */
+  display: inline-flex;          /* size to content */
+  padding-left: 24px; 
+  padding-right: 24px;
+}
+
+/* If you DO want full-width on phones only, do this instead: */
+@media (min-width: 640px) {
+  .wp-block-button__link {
+    width: auto !important;
+  }
+}
+
 
 @keyframes winAnimation {
-    0%, 100% { transform: translate(-50%, -50%) scale(1); }
-    50% { transform: translate(-50%, -50%) scale(1.1); }
+  0%, 100% { transform: translate(-50%, -50%) scale(1); }
+  50% { transform: translate(-50%, -50%) scale(1.1); }
 }
-
-#winMessage.show {
-    animation: winAnimation 1s ease infinite;
-}
+#winMessage.show { animation: winAnimation 1s ease infinite; }
 
 .message button {
-    margin-top: 20px;
-    padding: 10px 20px;
-    font-size: 1em;
-    color: #fff;
-    background-color: #0095DD;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    align-self: center; 
-    transition: background-color 0.3s, transform 0.3s;
+  margin-top: 20px;
+  padding: 10px 20px;
+  font-size: 1em;
+  color: #fff;
+  background-color: #0095DD;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  align-self: center;
+  transition: background-color 0.3s, transform 0.3s;
+}
+.message button:hover { background-color: #0077AA; transform: scale(1.05); }
+.message button:active { transform: scale(0.95); }
+
+/* Reduced motion: respect user preference */
+@media (prefers-reduced-motion: reduce) {
+  .message { transition: none; }
+  #winMessage.show { animation: none; }
 }
 
-.message button:hover {
-    background-color: #0077AA;
-    transform: scale(1.05);
-}
-
-.message button:active {
-    transform: scale(0.95);
-}
-
+/* Responsive tweaks */
 @media (max-width: 768px) {
-    .container {
-        width: auto; /* or 100% */
-        padding: 0 10px; /* Add some padding on the sides */
-        box-sizing: border-box; /* Include padding in width calculation */
-    }
-
-    #breakoutCanvas {
-        /* Adjust canvas size for smaller screens if necessary */
-        width: 100%;
-        height: auto;
-    }
-
-    .message {
-        position: fixed; /* changed from absolute to fixed */
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        font-size: 1.5em; /* Smaller font size for mobile */
-        padding: 10px; /* Smaller padding for mobile */
-        width: 90%; /* Set a max width for the message box */
-        box-sizing: border-box; /* Include padding and border in width calculation */
-    }
-
-    .message-text {
-        margin-bottom: 10px; /* Less space between the text and the button */
-    }
-
-    .message button {
-        padding: 8px 16px; /* Smaller button padding */
-        font-size: 0.9em; /* Smaller button font size */
-    }
-
-    #game-controls {
-        display: flex; /* Ensure controls are flex */
-        justify-content: center; /* Center buttons horizontally */
-        padding: 10px 0; /* Less vertical padding */
-    }
-
-    #keyboard-instructions {
-        display: none; /* Hide keyboard instructions on mobile */
-    }
-}
-
-/* Ensure the button is on its own line and not too wide */
-.message button {
-    width: auto; /* or you can set a max-width */
-    display: block; /* makes the button a block element */
-    margin: 10px auto; /* centers the button horizontally */
+  .container { width: auto; padding: 0 10px; box-sizing: border-box; }
+  #breakoutCanvas { width: 100%; height: auto; }
+  .message {
+    font-size: 1.5em;
+    padding: 10px;
+    width: 90%;
+    box-sizing: border-box;
+  }
+  .message-text { margin-bottom: 10px; }
+  .message button { padding: 8px 16px; font-size: 0.9em; }
+  #game-controls { display: flex; justify-content: center; padding: 10px 0; }
+  #keyboard-instructions { display: none; }
 }
